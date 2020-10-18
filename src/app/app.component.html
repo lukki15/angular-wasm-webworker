@@ -26,6 +26,7 @@
         placeholder="n"
         id="inputNumber"
         value="42"
+        [disabled]="isRunning"
       />
     </fieldset>
   </form>
@@ -41,18 +42,18 @@
     <tbody>
       <tr>
         <td>JS</td>
-        <td><button class="button">RUN</button></td>
-        <td>- ms</td>
+        <td><button class="button" (click)="clickJsButton()" [disabled]="isRunning">RUN</button></td>
+        <td>{{jsTime === 0 ? "-" : jsTime}} ms</td>
       </tr>
       <tr>
         <td>JS + Webworker</td>
-        <td><button class="button">RUN</button></td>
-        <td>- ms</td>
+        <td><button class="button" [disabled]="isRunning">RUN</button></td>
+        <td>{{jsWebworkerTime === 0 ? "-" : jsWebworkerTime}} ms</td>
       </tr>
       <tr>
         <td>WASM + Webworker</td>
-        <td><button class="button">RUN</button></td>
-        <td>- ms</td>
+        <td><button class="button" [disabled]="isRunning">RUN</button></td>
+        <td>{{wasmWebworkerTime === 0 ? "-" : wasmWebworkerTime}} ms</td>
       </tr>
     </tbody>
   </table>
