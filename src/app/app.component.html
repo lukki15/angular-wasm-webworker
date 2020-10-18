@@ -13,3 +13,47 @@
     </p>
   </section>
 </header>
+
+<section class="container">
+  <br />
+
+  <form>
+    <fieldset>
+      <label for="inputNumber">Calculate the Fibonacci Number of:</label>
+      <input
+        type="number"
+        min="1"
+        placeholder="n"
+        id="inputNumber"
+        value="42"
+      />
+    </fieldset>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Action</th>
+        <th>Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>JS</td>
+        <td><button class="button">RUN</button></td>
+        <td>- ms</td>
+      </tr>
+      <tr>
+        <td>JS + Webworker</td>
+        <td><button class="button">RUN</button></td>
+        <td>- ms</td>
+      </tr>
+      <tr>
+        <td>WASM + Webworker</td>
+        <td><button class="button">RUN</button></td>
+        <td>- ms</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
