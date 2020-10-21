@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { FormGroup,  FormBuilder,  Validators, AbstractControl } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  AbstractControl,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -15,17 +20,31 @@ export class AppComponent {
   jsWebworkerTime?: number;
   wasmWebworkerTime?: number;
 
+  jsWorker?: Worker;
+
   angForm: FormGroup;
-   constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder) {
     this.angForm = this.fb.group({
-      inputNumber: [42, Validators.compose([
-        Validators.required, AppComponent.onlyPositives ]) ]
-   });
+      inputNumber: [
+        42,
+        Validators.compose([Validators.required, AppComponent.onlyPositives]),
+      ],
+    });
+
+    if (typeof Worker !== 'undefined') {
+      this.jsWorker = new Worker('./webworker/js.worker', { type: 'module' });
+      this.jsWorker.onmessage = ({ data }) => {
+        this.jsWebworkerTime = data;
+        this.isRunning = false;
+      };
+    }
   }
 
-  static onlyPositives(control: AbstractControl): { [key: string]: any; } | null {
+  static onlyPositives(
+    control: AbstractControl
+  ): { [key: string]: any } | null {
     if (Number(control.value) < 0) {
-      return {nonZero: true};
+      return { nonZero: true };
     } else {
       return null;
     }
@@ -43,7 +62,7 @@ export class AppComponent {
   }
 
   clickJsButton(): void {
-    if (this.angForm.invalid){
+    if (this.angForm.invalid) {
       return;
     }
 
@@ -55,5 +74,14 @@ export class AppComponent {
       this.jsTime = t1 - t0;
       this.isRunning = false;
     }, 50);
+  }
+
+  clickJsWebworkerButton(): void {
+    if (this.angForm.invalid || !this.jsWorker) {
+      return;
+    }
+
+    this.isRunning = true;
+    this.jsWorker.postMessage(this.angForm.value.inputNumber as number);
   }
 }
