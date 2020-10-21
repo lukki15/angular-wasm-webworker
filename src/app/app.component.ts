@@ -11,7 +11,7 @@ export class AppComponent {
 
   isRunning = false;
 
-  jsTime? : number;
+  jsTime?: number;
   jsWebworkerTime?: number;
   wasmWebworkerTime?: number;
 
@@ -23,7 +23,7 @@ export class AppComponent {
    });
   }
 
-  static onlyPositives(control:AbstractControl):{ [key: string]: any; } | null {
+  static onlyPositives(control: AbstractControl): { [key: string]: any; } | null {
     if (Number(control.value) < 0) {
       return {nonZero: true};
     } else {
@@ -42,15 +42,15 @@ export class AppComponent {
     return this.fibonacci_js(n - 1) + this.fibonacci_js(n - 2);
   }
 
-  clickJsButton() {
-    if(this.angForm.invalid){
+  clickJsButton(): void {
+    if (this.angForm.invalid){
       return;
     }
 
     this.isRunning = true;
     setTimeout(() => {
       const t0 = performance.now();
-      this.fibonacci_js(this.angForm.value['inputNumber'] as number).toString();
+      this.fibonacci_js(this.angForm.value.inputNumber as number).toString();
       const t1 = performance.now();
       this.jsTime = t1 - t0;
       this.isRunning = false;
