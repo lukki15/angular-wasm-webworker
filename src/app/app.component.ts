@@ -16,11 +16,12 @@ export class AppComponent {
 
   isRunning = false;
 
-  jsTime?: number;
-  jsWebworkerTime?: number;
-  wasmWebworkerTime?: number;
+  jsTime: number | null = null;
+  jsWebworkerTime: number | null = null;
+  wasmWebworkerTime: number | null = null;
 
   jsWorker?: Worker;
+  wasmWorker?: Worker;
 
   angForm: FormGroup;
   constructor(private fb: FormBuilder) {
@@ -35,6 +36,12 @@ export class AppComponent {
       this.jsWorker = new Worker('./webworker/js.worker', { type: 'module' });
       this.jsWorker.onmessage = ({ data }) => {
         this.jsWebworkerTime = data;
+        this.isRunning = false;
+      };
+
+      this.wasmWorker = new Worker('./webworker/wasm.worker', { type: 'module' });
+      this.jsWorker.onmessage = ({ data }) => {
+        this.wasmWebworkerTime = data;
         this.isRunning = false;
       };
     }
@@ -59,6 +66,12 @@ export class AppComponent {
     }
 
     return this.fibonacci_js(n - 1) + this.fibonacci_js(n - 2);
+  }
+
+  resetTime(): void{
+    this.jsTime = null;
+    this.jsWebworkerTime = null;
+    this.wasmWebworkerTime = null;
   }
 
   clickJsButton(): void {

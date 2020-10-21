@@ -26,6 +26,7 @@
         placeholder="n"
         id="inputNumber"
         formControlName="inputNumber"
+        (keyup) = "resetTime()"
       />
     </fieldset>
   </form>
@@ -42,17 +43,17 @@
       <tr>
         <td>JS</td>
         <td><button class="button" (click)="clickJsButton()" [disabled]="isRunning || angForm.invalid">RUN</button></td>
-        <td>{{jsTime == null ? "-" : jsTime}} ms</td>
+        <td>{{jsTime === null ? "-" : jsTime}} ms</td>
       </tr>
       <tr>
         <td>JS + Webworker</td>
         <td><button class="button" (click)="clickJsWebworkerButton()" [disabled]="isRunning || angForm.invalid">RUN</button></td>
-        <td>{{jsWebworkerTime == null ? "-" : jsWebworkerTime}} ms</td>
+        <td>{{jsWebworkerTime === null ? "-" : jsWebworkerTime}} ms</td>
       </tr>
       <tr>
         <td>WASM + Webworker</td>
         <td><button class="button" [disabled]="isRunning || angForm.invalid">RUN</button></td>
-        <td>{{wasmWebworkerTime == null ? "-" : wasmWebworkerTime}} ms</td>
+        <td>{{wasmWebworkerTime === null ? "-" : wasmWebworkerTime}} ms</td>
       </tr>
     </tbody>
   </table>
