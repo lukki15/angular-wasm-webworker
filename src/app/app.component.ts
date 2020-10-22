@@ -40,7 +40,7 @@ export class AppComponent {
       };
 
       this.wasmWorker = new Worker('./webworker/wasm.worker', { type: 'module' });
-      this.jsWorker.onmessage = ({ data }) => {
+      this.wasmWorker.onmessage = ({ data }) => {
         this.wasmWebworkerTime = data;
         this.isRunning = false;
       };
@@ -96,5 +96,14 @@ export class AppComponent {
 
     this.isRunning = true;
     this.jsWorker.postMessage(this.angForm.value.inputNumber as number);
+  }
+
+  clickWasmWebworkerButton(): void {
+    if (this.angForm.invalid || !this.wasmWorker) {
+      return;
+    }
+
+    this.isRunning = true;
+    this.wasmWorker.postMessage(this.angForm.value.inputNumber as number);
   }
 }

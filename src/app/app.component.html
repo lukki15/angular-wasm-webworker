@@ -52,7 +52,7 @@
       </tr>
       <tr>
         <td>WASM + Webworker</td>
-        <td><button class="button" [disabled]="isRunning || angForm.invalid">RUN</button></td>
+        <td><button class="button" (click)="clickWasmWebworkerButton()" [disabled]="isRunning || angForm.invalid">RUN</button></td>
         <td>{{wasmWebworkerTime === null ? "-" : wasmWebworkerTime}} ms</td>
       </tr>
     </tbody>
